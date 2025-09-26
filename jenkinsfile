@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Checkout from Git') { 
             steps {
-               git branch: 'prod', url: 'https://github.com/bkrrajmali/morning-javaspringbootapp.git'
+               git branch: 'main', url: 'https://github.com/4dhiv1/spring-petclinic.git'
             }
         }
         stage('Maven Validate') { 
