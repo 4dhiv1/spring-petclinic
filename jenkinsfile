@@ -10,8 +10,8 @@ pipeline {
         ACR_LOGIN_SERVER = "azconreg25.azurecr.io"
         FULL_IMAGE_NAME = "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG}"
         TENANT_ID   = "573c6803-d356-4c52-be17-547f193cd7a5"
-        RESOURCE_GROUP = "demo-rg"
-        CLUSTER_NAME    = "demo-eks"
+        RESOURCE_GROUP = "bootcamp-1"
+        CLUSTER_NAME    = "aksclust25"
     }
     stages {
         stage('Checkout from Git') { 
@@ -89,19 +89,19 @@ pipeline {
             }
          }
        }
-//        stage ('Login to AKS Cluster') {
-//         steps {
-//             withCredentials([usernamePassword(credentialsId: 'azure-acr-sp', usernameVariable: 'AZURE_USERNAME', passwordVariable: 'AZURE_PASSWORD' )]) {
-//             script {
-//                 echo "Azure Login to AKS"
-//                 sh '''
-//                 az login --service-principal -u $AZURE_USERNAME -p $AZURE_PASSWORD --tenant $TENANT_ID
-//                 az aks get-credentials --resource-group $RESOURCE_GROUP   --name $CLUSTER_NAME --overwrite-existing
-//                 '''
-//              }
-//             }
-//           }
-//        }
+       stage ('Login to AKS Cluster') {
+        steps {
+            withCredentials([usernamePassword(credentialsId: 'azure-acr-sp', usernameVariable: 'AZURE_USERNAME', passwordVariable: 'AZURE_PASSWORD' )]) {
+            script {
+                echo "Azure Login to AKS"
+                sh '''
+                az login --service-principal -u $AZURE_USERNAME -p $AZURE_PASSWORD --tenant $TENANT_ID
+                az aks get-credentials --resource-group $RESOURCE_GROUP   --name $CLUSTER_NAME --overwrite-existing
+                '''
+             }
+            }
+          }
+       }
 //        stage ('Deploy to AKS') {
 //         steps {
 //             withCredentials([usernamePassword(credentialsId: 'azure-acr-sp', usernameVariable: 'AZURE_USERNAME', passwordVariable: 'AZURE_PASSWORD' )]) {
