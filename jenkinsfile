@@ -41,39 +41,39 @@ pipeline {
             }
         }
 
-        stage('SonarCloud Analysis') {
-            environment {
-                SCANNER_HOME = tool 'sonar-scanner' // Make sure this matches Jenkins tool config
-            }
-            steps {
-                withSonarQubeEnv('sonarserver') {
-                    sh '''
-                        $SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.organization=Adhithyaa \
-                        -Dsonar.projectName=petclinic-boot1 \
-                        -Dsonar.projectKey=4dhiv1_petclinic-boot1 \
-                        -Dsonar.sources=src \
-                        -Dsonar.java.binaries=target/classes \
-                        -Dsonar.host.url=https://sonarcloud.io
-                    '''
-                }
-            }
-        }
+        // stage('SonarCloud Analysis') {
+        //     environment {
+        //         SCANNER_HOME = tool 'sonar-scanner' // Make sure this matches Jenkins tool config
+        //     }
+        //     steps {
+        //         withSonarQubeEnv('sonarserver') {
+        //             sh '''
+        //                 $SCANNER_HOME/bin/sonar-scanner \
+        //                 -Dsonar.organization=Adhithyaa \
+        //                 -Dsonar.projectName=petclinic-boot1 \
+        //                 -Dsonar.projectKey=4dhiv1_petclinic-boot1 \
+        //                 -Dsonar.sources=src \
+        //                 -Dsonar.java.binaries=target/classes \
+        //                 -Dsonar.host.url=https://sonarcloud.io
+        //             '''
+        //         }
+        //     }
+        // }
 
-        stage('Publish Sonar Report') {
-            steps {
-                withCredentials([string(credentialsId: 'sonarcloud-token', variable: 'SONAR_TOKEN')]) {
-                    sh '''
-                        mvn clean verify sonar:sonar \
-                        -Dsonar.projectKey=4dhiv1_petclinic-boot1 \
-                        -Dsonar.organization=Adhithyaa \
-                        -Dsonar.host.url=https://sonarcloud.io \
-                        -Dsonar.login=$SONAR_TOKEN \
-                        -Dsonar.qualitygate.wait=false
-                    '''
-                }
-            }
-        }
+        // stage('Publish Sonar Report') {
+        //     steps {
+        //         withCredentials([string(credentialsId: 'sonarcloud-token', variable: 'SONAR_TOKEN')]) {
+        //             sh '''
+        //                 mvn clean verify sonar:sonar \
+        //                 -Dsonar.projectKey=4dhiv1_petclinic-boot1 \
+        //                 -Dsonar.organization=Adhithyaa \
+        //                 -Dsonar.host.url=https://sonarcloud.io \
+        //                 -Dsonar.login=$SONAR_TOKEN \
+        //                 -Dsonar.qualitygate.wait=false
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
