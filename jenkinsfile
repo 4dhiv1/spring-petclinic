@@ -61,7 +61,7 @@ pipeline {
         steps {
             script {
                 echo "Docker Image Build"
-                docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                docker.build("${IMAGE_NAME}:${IMAGE_TAG}", ".devcontainer")
             }
         }
        }
