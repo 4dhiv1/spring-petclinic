@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven' // Ensure this matches the Maven installation name in Jenkins
+        maven 'Maven' // Make sure this matches your Jenkins Maven installation name
     }
 
     environment {
-        ImageName = 'spring-app'   // Your app image name
-        BUILD_TAG = "latest"
+        ImageName = 'spring-app'          // Docker image name
+        BUILD_TAG = "latest"              // Docker image tag
     }
 
     stages {
@@ -43,15 +43,15 @@ pipeline {
 
         stage('SonarCloud Analysis') {
             environment {
-                SCANNER_HOME = tool 'sonar-scanner'
+                SCANNER_HOME = tool 'sonar-scanner' // Make sure this matches Jenkins tool config
             }
             steps {
                 withSonarQubeEnv('sonarserver') {
                     sh '''
                         $SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.organization=sonarproject456 \
-                        -Dsonar.projectName=jenkins \
-                        -Dsonar.projectKey=sonarproject456_jenkins789 \
+                        -Dsonar.organization=Adhithyaa \
+                        -Dsonar.projectName=petclinic-boot1 \
+                        -Dsonar.projectKey=4dhiv1_petclinic-boot1 \
                         -Dsonar.sources=src \
                         -Dsonar.java.binaries=target/classes \
                         -Dsonar.host.url=https://sonarcloud.io
@@ -65,8 +65,8 @@ pipeline {
                 withCredentials([string(credentialsId: 'sonarcloud-token', variable: 'SONAR_TOKEN')]) {
                     sh '''
                         mvn clean verify sonar:sonar \
-                        -Dsonar.projectKey=sonarproject456_jenkins789 \
-                        -Dsonar.organization=sonarproject456 \
+                        -Dsonar.projectKey=4dhiv1_petclinic-boot1 \
+                        -Dsonar.organization=Adhithyaa \
                         -Dsonar.host.url=https://sonarcloud.io \
                         -Dsonar.login=$SONAR_TOKEN \
                         -Dsonar.qualitygate.wait=false
