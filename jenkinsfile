@@ -37,7 +37,7 @@ pipeline {
                 withSonarQubeEnv('sonarserver'){
                     sh '''
                     $SCANNER_HOME/bin/sonar-scanner \
-                    -Dsonar.organization=Adhithyaa \
+                    -Dsonar.organization=4dhiv1 \
                     -Dsonar.projectName=petclinic-boot1 \
                     -Dsonar.projectKey=4dhiv1_petclinic-boot1 \
                     -Dsonar.java.binaries=.
