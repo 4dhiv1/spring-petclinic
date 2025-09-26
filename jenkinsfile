@@ -1,0 +1,38 @@
+stage('Git Checkout') {
+    steps {
+        git branch: 'main', url: 'https://github.com/4dhiv1/spring-petclinic.git'
+    }
+}
+stage('Maven Build') {
+    steps {
+        sh 'mvn validate'
+        sh 'mvn compile'
+        sh 'mvn test'
+        sh 'mvn package'
+    }
+}
+stage('SonarCloud Analysis') {
+    steps {
+        withSonarQubeEnv('SonarCloud') {
+            sh 'mvn sonar:sonar'
+        }
+    }
+}
+stage('Build Docker Image') {
+    steps {
+        sh 'docker build -t azconreg25.azurecr.io/spring-app:latest .'
+    }
+}
+stage('Push to ACR') {
+    steps {
+        sh 'docker login azconreg25.azurecr.io -u azuredocker -p Password@123'
+        sh 'docker push azconreg25.azurecr.io/spring-app:latest'
+    }
+}
+stage('Deploy to AKS') {
+    steps {
+        sh 'kubectl apply -f k8s/deployment.yaml'
+        sh 'kubectl apply -f k8s/service.yaml'
+    }
+}
+
