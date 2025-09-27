@@ -10,8 +10,8 @@ pipeline {
         ACR_LOGIN_SERVER = "azconreg25.azurecr.io"
         FULL_IMAGE_NAME = "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG}"
         TENANT_ID   = "573c6803-d356-4c52-be17-547f193cd7a5"
-        RESOURCE_GROUP = "bootcamp-1"
-        CLUSTER_NAME    = "aksclust25"
+        // RESOURCE_GROUP = "bootcamp-1"
+        // CLUSTER_NAME    = "aksclust25"
     }
     stages {
         stage('Checkout from Git') { 
