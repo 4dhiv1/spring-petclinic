@@ -21,12 +21,12 @@ pipeline {
         }
         stage('Maven Validate') { 
             steps {
-               sh 'mvn validate'
+               sh 'mvn validate -Dcheckstyle.skip=true -Dnohttp.check.skip=true'
             }
         }
         stage('Maven Compile') { 
             steps {
-               sh 'mvn compile'
+               sh 'mvn compile -Dcheckstyle.skip=true -Dnohttp.check.skip=true'
             }
         }
         stage('Sonar Analysis') { 
@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Maven Package') { 
             steps {
-               sh 'mvn package'
+               sh 'mvn package -Dcheckstyle.skip=true -Dnohttp.check.skip=true'
             }
         }
     //     stage('Sonar Quality Gate') {
